@@ -74,3 +74,21 @@ def test_daily_min_string():
 
 # other potential tests  - check for NaNs, NAs, mixture of strings & integers, floats
 # need to test things that are not valid (and that they throw errors), not just things that should work 
+# best practice: keep tests small & focused 
+
+
+#### now trying perameterized tests
+
+# the "@" bit is a 'decorator', and it 'decorates' the functions
+# it wraps around the function
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([ [0,0], [0,0], [0,0]], [0,0]), # 3*2 array of inputs, and 1*2 array of expected outputs
+        ([ [1,2], [3,4], [5,6]], [3,4]),
+    ]
+)
+def test_daily_mean(test,expected):
+    """Test mean function works for array of zeroes and positive integers"""
+    npt.assert_array_equal(daily_mean(np.array(test)), np.array(expected))
+
