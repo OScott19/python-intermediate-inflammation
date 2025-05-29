@@ -2,6 +2,7 @@
 
 import numpy as np
 import numpy.testing as npt
+import pytest
 
 from inflammation.models import daily_mean
 
@@ -29,3 +30,47 @@ def test_daily_mean_integers():
     # Need to use Numpy testing functions to compare arrays
     npt.assert_array_equal(daily_mean(test_input), test_result)
 
+
+
+## add test for daily max and daily min
+
+
+from inflammation.models import daily_min
+
+def test_daily_min_integers():
+    """Test that the daily_min function works for an array of positive and negative integers."""
+
+    test_input = np.array([[ 5, 100, 4],
+                           [-6, 44,  1],
+                           [ 0,  0,  55]])
+    test_result = np.array([-6,  0,  1])
+
+    # Need to use Numpy testing functions to compare arrays
+    npt.assert_array_equal(daily_min(test_input), test_result)
+
+
+from inflammation.models import daily_max
+
+def test_daily_max_integers():
+    """Test that daily_max function works for an array of positive and negative integers."""
+
+    test_input = np.array([[5, -100, -4, 1],
+                           [-6, -44,  -1, 2],
+                           [0, 0,    -55, 3]])
+    test_result = np.array([5, 0, -1, 3])
+
+    # Need to use Numpy testing functions to compare arrays
+    npt.assert_array_equal(daily_max(test_input), test_result)
+
+### test for NaNs?
+
+def test_daily_min_string():
+    """Test for TypeError when passing strings"""
+
+    with pytest.raises(TypeError):
+        error_expected = daily_min([['Hello', 'there'], ['General', 'Kenobi']])
+
+
+
+# other potential tests  - check for NaNs, NAs, mixture of strings & integers, floats
+# need to test things that are not valid (and that they throw errors), not just things that should work 
